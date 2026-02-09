@@ -140,7 +140,6 @@ source = { virtual = "." }
 dependencies = [
     { name = "fastapi" },
     { name = "httpx" },
-    { name = "pydantic" },
     { name = "uvicorn" },
 ]
 
@@ -153,7 +152,6 @@ dev = [
 requires-dist = [
     { name = "fastapi" },
     { name = "httpx" },
-    { name = "pydantic" },
     { name = "uvicorn" },
 ]
 
