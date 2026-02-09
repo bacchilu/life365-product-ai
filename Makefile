@@ -1,3 +1,9 @@
+USER_ID ?= $(shell id -u)
+GROUP_ID ?= $(shell id -g)
+
+export USER_ID
+export GROUP_ID
+
 up:
 	docker compose up
 

@@ -1,6 +1,10 @@
 services:
   api:
-    build: .
+    build:
+      context: .
+      args:
+        USER_ID: ${USER_ID:-1000}
+        GROUP_ID: ${GROUP_ID:-1000}
     container_name: life365_product_ai_api
     ports:
       - "8000:8000"
