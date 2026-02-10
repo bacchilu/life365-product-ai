@@ -10,6 +10,39 @@ services:
       - "8000:8000"
     environment:
       - APP_ENV=dev
+      - RABBITMQ_HOST=rabbitmq
     volumes:
       - ./:/app
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  rabbitmq:
+    image: rabbitmq:4.2.1-management
+    container_name: life365_product_ai_rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  worker:
+    build:
+      context: .
+      args:
+        USER_ID: ${USER_ID:-1000}
+        GROUP_ID: ${GROUP_ID:-1000}
+    container_name: life365_product_ai_worker
+    volumes:
+      - ./:/app
+    environment:
+      - APP_ENV=dev
+      - RABBITMQ_HOST=rabbitmq
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    command: sleep infinity

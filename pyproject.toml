@@ -3,17 +3,5 @@ name = "life365-product-ai"
 version = "0.1.0"
 requires-python = ">=3.14"
 
-dependencies = [
-  "fastapi",
-  "uvicorn",
-  "httpx",
-]
-
 [tool.pytest.ini_options]
 pythonpath = ["."]
-
-[dependency-groups]
-dev = [
-    "pytest",
-]
-
