@@ -1,20 +1,36 @@
-USER_ID ?= $(shell id -u)
-GROUP_ID ?= $(shell id -g)
+.PHONY: venv test clean docker-up docker-down upgrade logs
 
-export USER_ID
-export GROUP_ID
+export USER_ID := $(shell id -u)
+export GROUP_ID := $(shell id -g)
 
-up:
-	docker compose up
+upgrade:
+	rm -f requirements.txt
+	uv venv
+	uv pip compile requirements.in > requirements.txt
+	uv pip sync requirements.txt
+	rm .venv/.gitignore
 
-down:
-	docker compose down -v
+venv:
+	uv venv
+	uv pip sync requirements.txt
+	rm .venv/.gitignore
 
-logs:
-	docker compose logs api --follow
-
-dependencies:
-	uv export --format requirements-txt > requirements.txt
+clean:
+	find . -type f -name "*.pyc" -delete
+	find . -type d -name "__pycache__" -prune -exec rm -rf {} +
+	find . -type d -name ".pytest_cache" -prune -exec rm -rf {} +
+	find . -type d -name ".mypy_cache" -prune -exec rm -rf {} +
+	rm -f uv.lock
 
 test:
 	uv run pytest
+
+docker-up:
+	docker compose up
+
+docker-down:
+	docker compose down -v
+	docker image prune -a
+
+logs:
+	docker compose logs api --follow
