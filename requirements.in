@@ -3,5 +3,6 @@ uvicorn
 pydantic
 pydantic-settings
 httpx
+structlog
 
 pytest
