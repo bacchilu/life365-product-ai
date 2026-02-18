@@ -41,7 +41,7 @@ pydantic==2.12.5
     #   pydantic-settings
 pydantic-core==2.41.5
     # via pydantic
-pydantic-settings==2.12.0
+pydantic-settings==2.13.0
     # via -r requirements.in
 pygments==2.19.2
     # via pytest
@@ -64,5 +64,5 @@ typing-inspection==0.4.2
     #   fastapi
     #   pydantic
     #   pydantic-settings
-uvicorn==0.40.0
+uvicorn==0.41.0
     # via -r requirements.in
